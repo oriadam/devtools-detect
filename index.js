@@ -6,24 +6,33 @@ MIT License
 */
 (function () {
 	'use strict';
+	
+	const devtools = {
+		isOpen: false
+	};
+	
+	let interval;
 
-	let state = false;
 	const detector = function () {}
 	detector.toString = function () {
-		if (state) return; // run once
-		state = true;
-		window.devtoolsopen = 1;
-		window.dispatchEvent(new CustomEvent('devtoolschange', {detail: {isOpen: true}}));
+		if (devtools.isOpen) 
+			return; // run once
+		devtools.isOpen = true;
+		window.dispatchEvent(new CustomEvent('devtoolschange', {detail: devtools}));
+		clearInterval(interval); // run once
 	}
 	
 	const main = function() {
-		console.log('%c', detector)
+		console.log('%c', detector);
 	};
 
 	main();
-	const interval = setInterval(main, 500);
+	interval = setInterval(main, 500);
 
 	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = devtools_detect;
+		module.exports = devtools;
+	} else {
+		window.devtools = devtools;	
 	}
+	
 })();
