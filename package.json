@@ -1,13 +1,13 @@
 {
 	"name": "devtools-detect",
 	"version": "3.0.1",
-	"description": "Detect if DevTools is open and its orientation",
+	"description": "Detect if DevTools is open",
 	"license": "MIT",
-	"repository": "sindresorhus/devtools-detect",
+	"repository": "oriadam/devtools-detect",
 	"author": {
-		"name": "Sindre Sorhus",
-		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"name": "example",
+		"email": "example@example.com",
+		"url": "example.com"
 	},
 	"engines": {
 		"node": ">=8"
