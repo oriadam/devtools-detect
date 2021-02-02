@@ -1,18 +1,11 @@
 /// <reference lib="dom"/>
 
 declare namespace devTools {
-	type Orientation = 'vertical' | 'horizontal';
-
 	interface DevTools {
 		/**
 		Whether DevTools is open.
 		*/
 		readonly isOpen: boolean;
-
-		/**
-		Orientation of the DevTools if it's open.
-		*/
-		readonly orientation?: Orientation;
 	}
 
 	interface DevToolsEvent extends Event {
