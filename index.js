@@ -1,60 +1,29 @@
 /*!
 devtools-detect
 Detect if DevTools is open
-https://github.com/sindresorhus/devtools-detect
-By Sindre Sorhus
+https://github.com/oriadam/devtools-detect
 MIT License
 */
 (function () {
 	'use strict';
 
-	const devtools = {
-		isOpen: false,
-		orientation: undefined
+	let state = false;
+	const detector = function () {}
+	detector.toString = function () {
+		if (state) return; // run once
+		state = true;
+		window.devtoolsopen = 1;
+		window.dispatchEvent(new CustomEvent('devtoolschange', {detail: {isOpen: true}}));
+	}
+	
+	const main = function() {
+		console.log('%c', detector)
 	};
 
-	const threshold = 160;
-
-	const emitEvent = (isOpen, orientation) => {
-		window.dispatchEvent(new CustomEvent('devtoolschange', {
-			detail: {
-				isOpen,
-				orientation
-			}
-		}));
-	};
-
-	const main = ({emitEvents = true} = {}) => {
-		const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-		const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-		const orientation = widthThreshold ? 'vertical' : 'horizontal';
-
-		if (
-			!(heightThreshold && widthThreshold) &&
-			((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)
-		) {
-			if ((!devtools.isOpen || devtools.orientation !== orientation) && emitEvents) {
-				emitEvent(true, orientation);
-			}
-
-			devtools.isOpen = true;
-			devtools.orientation = orientation;
-		} else {
-			if (devtools.isOpen && emitEvents) {
-				emitEvent(false, undefined);
-			}
-
-			devtools.isOpen = false;
-			devtools.orientation = undefined;
-		}
-	};
-
-	main({emitEvents: false});
-	setInterval(main, 500);
+	main();
+	const interval = setInterval(main, 500);
 
 	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = devtools;
-	} else {
-		window.devtools = devtools;
+		module.exports = devtools_detect;
 	}
 })();
